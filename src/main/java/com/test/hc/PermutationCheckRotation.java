@@ -21,26 +21,9 @@ public class PermutationCheckRotation {
 			}
 			System.out.println("Array created: " + Arrays.toString(oriArr));
 			
-			// shift 
-			System.out.print("Shifting Right: ");
-			int shift = sc.nextInt();
-			System.out.println();
-			
-			shift = shift % arrLength;
-			if (shift > 0) {
-				int[] newArr = new int[arrLength];
-				for (int i = 0; i < arrLength; i++) {
-					int newIdx = i + shift;
-					if (newIdx > (arrLength - 1)) {
-						newIdx = newIdx - arrLength;
-					}
-					newArr[newIdx] = oriArr[i];
-				}
-				System.out.println("New Array: " + Arrays.toString(newArr));
-			} else {
-				System.out.println("New Array: " + Arrays.toString(oriArr));
-			}
-			
+			// check permutation
+			int ret = solution(oriArr);
+			System.out.println("Is array permutation: " + ret);
 			
 			
 		} catch (Exception e) {
@@ -52,7 +35,7 @@ public class PermutationCheckRotation {
 		}
 	}
 	
-	public int solution(int[] a) {
+	public static int solution(int[] a) {
 		if (a.length > 0) {
 			// assigning to temp
 			int[] tempArr = new int[a.length];
