@@ -1,4 +1,4 @@
-package com.test.hc;
+package com.hc.exam;
 
 import java.util.Arrays;
 
