@@ -1,4 +1,4 @@
-package com.hc.product.entity;
+package com.hc.product.model;
 
 import java.util.Date;
 
