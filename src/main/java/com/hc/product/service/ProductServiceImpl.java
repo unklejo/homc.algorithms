@@ -17,11 +17,6 @@ public class ProductServiceImpl implements ProductService {
     private ProductDAO dao;
 
 	@Override
-	public void deleteProductById(Long id) {
-		dao.deleteProduct(id);
-	}
-
-	@Override
 	public void saveProduct(Product product) {
 		 dao.saveProduct(product);
 	}
@@ -32,14 +27,35 @@ public class ProductServiceImpl implements ProductService {
         if(entity!=null){
             entity.setName(product.getName());
             entity.setPrice(product.getPrice());
-            entity.setIsDeleted("F");
+            entity.setIsDeleted("N");
         }
 	}
 
 	@Override
+	public void physicalDeleteProductById(Long id) {
+		dao.deleteProduct(id);
+	}
+
+	@Override
+	public void softDeleteProductById(Long id) {
+		Product product = dao.findProductById(id);
+        if(product != null) {
+            product.setIsDeleted("Y");
+        }
+        saveProduct(product);
+	}
+
+	
+	@Override
 	public List<Product> findAllProducts() {
 		return dao.findAllProducts();
 	}
+	
+	@Override
+	public List<Product> findAllNonSoftDeletedProducts() {
+		return dao.findAllNonSoftDeletedProducts();
+	}
+	
 
 	@Override
 	public Product findProductById(Long id) {

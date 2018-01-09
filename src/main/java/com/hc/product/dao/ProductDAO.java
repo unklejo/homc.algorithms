@@ -9,6 +9,8 @@ public interface ProductDAO {
 	Product findProductById(Long id);
 
 	List<Product> findAllProducts();
+	
+	List<Product> findAllNonSoftDeletedProducts();
 
 	void saveProduct(Product product);
 

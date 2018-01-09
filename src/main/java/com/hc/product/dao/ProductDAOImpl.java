@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.hc.product.model.Product;
@@ -20,6 +21,14 @@ public class ProductDAOImpl extends AbstractDAO<Long, Product> implements
 	@Override
 	public List<Product> findAllProducts() {
 		Criteria criteria = createEntityCriteria();
+		return (List<Product>) criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> findAllNonSoftDeletedProducts() {
+		Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("isDeleted", "N"));
 		return (List<Product>) criteria.list();
 	}
 

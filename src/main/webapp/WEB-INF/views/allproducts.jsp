@@ -28,7 +28,7 @@
             <td>${product.name}</td>
             <td>${product.price}</td>
             <td><a href="<c:url value='/edit-${product.id}-product' />">update</a></td>
-            <td><a href="<c:url value='/delete-${product.id}-product' />">delete</a></td>
+            <td><a href="<c:url value='/soft-delete-${product.id}-product' />">delete</a></td>
             </tr>
         </c:forEach>
     </table>

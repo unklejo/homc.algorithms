@@ -10,9 +10,13 @@ public interface ProductService {
      
     void updateProduct(Product product);
      
-    void deleteProductById(Long id);
+    void physicalDeleteProductById(Long id);
  
-    List<Product> findAllProducts(); 
+    void softDeleteProductById(Long id);
+
+    List<Product> findAllProducts();
+    
+    List<Product> findAllNonSoftDeletedProducts();
      
     Product findProductById(Long id);
  
