@@ -11,7 +11,7 @@
     message : ${success}
     <br/>
     <br/>
-    Go back to <a href="<c:url value='/list' />">List of All Products</a>
+    Go back to <a href="<c:url value='/list-product' />">List of All Products</a>
      
 </body>
  

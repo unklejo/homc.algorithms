@@ -17,6 +17,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductDAO dao;
 
 	@Override
+	public void saveNewProduct(Product product) {
+		product.setIsDeleted("N");
+		dao.saveProduct(product);
+	}
+
+	@Override
 	public void saveProduct(Product product) {
 		 dao.saveProduct(product);
 	}

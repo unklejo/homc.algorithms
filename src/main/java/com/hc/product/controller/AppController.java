@@ -39,32 +39,36 @@ public class AppController {
 	@Autowired
 	MessageSource messageSource;
 
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/menu" }, method = RequestMethod.GET)
+	public String loadMainPage(ModelMap model) {
+		return "main";
+	}
+
+	@RequestMapping(value = { "/list-product" }, method = RequestMethod.GET)
 	public String listProducts(ModelMap model) {
 		List<Product> products = productService.findAllNonSoftDeletedProducts();
 		model.addAttribute("products", products);
 		return "allproducts";
 	}
 
-	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/new-product" }, method = RequestMethod.GET)
 	public String newProduct(ModelMap model) {
 		Product product = new Product();
 		product.setIsDeleted("N");
 		model.addAttribute("product", product);
 		model.addAttribute("edit", false);
-		return "registration";
+		return "productRegistration";
 	}
 
-	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/new-product" }, method = RequestMethod.POST)
 	public String saveProduct(@Valid Product product, BindingResult result,
 			ModelMap model) {
 
 		if (result.hasErrors()) {
-			return "registration";
+			return "productRegistration";
 		}
 
-		product.setIsDeleted("N");
-		productService.saveProduct(product);
+		productService.saveNewProduct(product);
 
 		model.addAttribute("success", "Product " + product.getName()
 				+ " inserted successfully");
@@ -76,14 +80,14 @@ public class AppController {
 		Product product = productService.findProductById(id);
 		model.addAttribute("product", product);
 		model.addAttribute("edit", true);
-		return "registration";
+		return "productRegistration";
 	}
 
 	@RequestMapping(value = { "/edit-{id}-product" }, method = RequestMethod.POST)
 	public String updateProduct(@Valid Product product, BindingResult result,
 			ModelMap model, @PathVariable Long id) {
 		if (result.hasErrors()) {
-			return "registration";
+			return "productRegistration";
 		}
 		productService.updateProduct(product);
 
@@ -96,25 +100,41 @@ public class AppController {
 	@RequestMapping(value = { "/delete-{id}-product" }, method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable Long id) {
 		productService.physicalDeleteProductById(id);
-		return "redirect:/list";
+		return "redirect:/list-product";
 	}
 
 	// soft delete
 	@RequestMapping(value = { "/soft-delete-{id}-product" }, method = RequestMethod.GET)
 	public String softDeleteProduct(@PathVariable Long id) {
 		productService.softDeleteProductById(id);
-		return "redirect:/list";
+		return "redirect:/list-product";
 	}
 	
-	
-	//---ORDER---
-	@RequestMapping(value = { "/listOrder" }, method = RequestMethod.GET)
+	//---ORDER UI---
+	@RequestMapping(value = { "/list-order" }, method = RequestMethod.GET)
 	public String listOrders(ModelMap model) {
 		List<Order> orders = orderService.findAllOrders();
 		model.addAttribute("orders", orders);
 		return "allorders";
 	}
 	
+	//---ORDER DETAIL UI---
+	@RequestMapping(value = { "/detail-{invoiceNo}-orderDetail" }, method = RequestMethod.GET)
+	public String detailOrderByOrderId(ModelMap model, @PathVariable Integer invoiceNo) {
+		OrderDetail orderDetail = orderService.findOrderDetailByInvoiceNumber(invoiceNo);
+		model.addAttribute("orderDetail", orderDetail);
+		return "orderDetail";
+	}
+	
+	//---ORDER DETAIL API---
+//	@RequestMapping(value = { "/list-order-detail" }, method = RequestMethod.GET)
+//	public String listOrderDetails(ModelMap model) {
+//		List<Order> orders = orderService.findAllOrders();
+//		model.addAttribute("orders", orders);
+//		return "allorders";
+//	}
+	
+	//---ORDER API---
 	@ResponseBody
 	@RequestMapping(value = { "/listOrderJSON" }, method = RequestMethod.GET)
 	public String listOrdersJSON() {
@@ -122,14 +142,7 @@ public class AppController {
 		return new Gson().toJson(orders);		
 	}
 
-	//---ORDER DETAIL---
-	@RequestMapping(value = { "/listOrderDetail" }, method = RequestMethod.GET)
-	public String listOrderDetails(ModelMap model) {
-		List<Order> orders = orderService.findAllOrders();
-		model.addAttribute("orders", orders);
-		return "allorders";
-	}
-	
+	//---ORDER DETAIL API---
 	@ResponseBody
 	@RequestMapping(value = { "/listOrderProductJSON" }, method = RequestMethod.GET)
 	public String listOrderDetailsJSON(@RequestParam Integer invoiceNo) {
