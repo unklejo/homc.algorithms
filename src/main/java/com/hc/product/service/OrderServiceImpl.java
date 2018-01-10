@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hc.product.dao.OrderDAO;
 import com.hc.product.model.Order;
+import com.hc.product.model.OrderDetail;
 
 @Service("orderService")
 @Transactional
@@ -19,6 +20,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Order> findAllOrders() {
 		return dao.findAllOrders();
+	}
+	
+	@Override
+	public List<OrderDetail> findAllDetailOrdersByInvoiceNumber(Integer invoiceNo) {
+		return dao.findAllOrderDetailByInvoiceNo(invoiceNo);
 	}
 	
 }

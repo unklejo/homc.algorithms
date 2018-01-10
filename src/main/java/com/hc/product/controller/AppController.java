@@ -11,12 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.hc.product.model.Order;
+import com.hc.product.model.OrderDetail;
 import com.hc.product.model.Product;
 import com.hc.product.service.OrderService;
 import com.hc.product.service.ProductService;
@@ -118,19 +121,19 @@ public class AppController {
 		return new Gson().toJson(orders);		
 	}
 
-//	//---ORDER DETAIL---
-//	@RequestMapping(value = { "/listOrderDetail" }, method = RequestMethod.GET)
-//	public String listOrderDetails(ModelMap model) {
-//		List<Order> orders = orderService.findAllOrders();
-//		model.addAttribute("orders", orders);
-//		return "allorders";
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value = { "/listOrderDetailJSON" }, method = RequestMethod.GET)
-//	public String listOrdersJSON() {
-//		List<Order> orders = orderService.findAllOrders();
-//		return new Gson().toJson(orders);		
-//	}
+	//---ORDER DETAIL---
+	@RequestMapping(value = { "/listOrderDetail" }, method = RequestMethod.GET)
+	public String listOrderDetails(ModelMap model) {
+		List<Order> orders = orderService.findAllOrders();
+		model.addAttribute("orders", orders);
+		return "allorders";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = { "/listOrderDetailJSON" }, method = RequestMethod.GET)
+	public String listOrderDetailsJSON(@RequestParam Integer invoiceNo) {
+		List<OrderDetail> orderDetails = orderService.findAllDetailOrdersByInvoiceNumber(invoiceNo);
+		return new Gson().toJson(orderDetails);	
+	}
 	
 }
