@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.hc.product.domain.OrderDetail;
 import com.hc.product.model.Order;
 import com.hc.product.model.OrderProduct;
 import com.hc.product.model.Product;
@@ -130,10 +131,15 @@ public class AppController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = { "/listOrderDetailJSON" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/listOrderProductJSON" }, method = RequestMethod.GET)
 	public String listOrderDetailsJSON(@RequestParam Integer invoiceNo) {
-		List<OrderProduct> orderDetails = orderService.findAllDetailOrdersByInvoiceNumber(invoiceNo);
-		return new Gson().toJson(orderDetails);	
+		List<OrderProduct> listOrderProduct = orderService.findAllDetailOrdersByInvoiceNumber(invoiceNo);
+		return new Gson().toJson(listOrderProduct);	
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = { "/orderDetailJSON" }, method = RequestMethod.GET)
+	public OrderDetail orderDetailsJSON(@RequestParam Integer invoiceNo) {
+		return orderService.findOrderDetailByInvoiceNumber(invoiceNo);
+	}
 }
