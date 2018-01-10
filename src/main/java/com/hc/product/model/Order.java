@@ -1,18 +1,21 @@
 package com.hc.product.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_order")
 public class Order {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true)
@@ -26,7 +29,7 @@ public class Order {
 
 	@Column(name = "create_order", nullable = false)
 	private Date createOrder;
-	
+
 	public long getId() {
 		return id;
 	}
@@ -58,5 +61,17 @@ public class Order {
 	public void setCreateOrder(Date createOrder) {
 		this.createOrder = createOrder;
 	}
+
+//	// additional
+//	@OneToMany(mappedBy = "order")
+//	private List<OrderDetail> orderDetailList;
+//
+//	public List<OrderDetail> getOrderDetailList() {
+//		return orderDetailList;
+//	}
+//
+//	public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+//		this.orderDetailList = orderDetailList;
+//	}
 
 }

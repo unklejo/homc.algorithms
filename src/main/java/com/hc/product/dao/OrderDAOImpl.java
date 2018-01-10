@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.hc.product.model.Order;
-import com.hc.product.model.OrderDetail;
+import com.hc.product.model.OrderProduct;
 
 @Repository("orderDao")
 public class OrderDAOImpl extends AbstractDAO<Long, Order> implements
@@ -21,14 +21,14 @@ public class OrderDAOImpl extends AbstractDAO<Long, Order> implements
 	}
 	
 	@Override
-	public List<OrderDetail> findAllOrderDetailByInvoiceNo(Integer invoiceNo) {
+	public List<OrderProduct> findAllOrderProductByInvoiceNo(Integer invoiceNo) {
 		Query query = getSession().createQuery(
-				"select od"
-				+ " from OrderDetail od"
-				+ " join od.order o"
+				"select op"
+				+ " from OrderProduct op"
+				+ " join op.order o"
 				+ " where o.invoiceNo = :invoiceNo");
 		query.setInteger("invoiceNo", invoiceNo);
-		return (List<OrderDetail>) query.list();
+		return (List<OrderProduct>) query.list();
 	}
 
 }

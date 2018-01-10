@@ -3,13 +3,13 @@ package com.hc.product.service;
 import java.util.List;
 
 import com.hc.product.model.Order;
-import com.hc.product.model.OrderDetail;
+import com.hc.product.model.OrderProduct;
 
 public interface OrderService {
 	
     List<Order> findAllOrders();
     
-    List<OrderDetail> findAllDetailOrdersByInvoiceNumber(Integer invoiceNo);
+    List<OrderProduct> findAllDetailOrdersByInvoiceNumber(Integer invoiceNo);
     
 }
 
