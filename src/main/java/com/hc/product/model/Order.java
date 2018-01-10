@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_order")
-public class ProductOrder {
+public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class ProductOrder {
 
 	@Column(name = "create_order", nullable = false)
 	private Date createOrder;
-
+	
 	public long getId() {
 		return id;
 	}

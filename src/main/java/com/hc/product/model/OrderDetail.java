@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_order_detail")
-public class ProductOrderDetail {
+public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true)
@@ -20,7 +20,7 @@ public class ProductOrderDetail {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", nullable = false)
-	private ProductOrder order;
+	private Order order;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", nullable = false)
@@ -37,11 +37,11 @@ public class ProductOrderDetail {
 		this.id = id;
 	}
 
-	public ProductOrder getOrder() {
+	public Order getOrder() {
 		return order;
 	}
 
-	public void setOrder(ProductOrder order) {
+	public void setOrder(Order order) {
 		this.order = order;
 	}
 
