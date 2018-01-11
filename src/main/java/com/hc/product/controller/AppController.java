@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.hc.product.domain.OrderDetail;
+import com.hc.product.domain.OrderProductSum;
 import com.hc.product.model.Order;
 import com.hc.product.model.OrderProduct;
 import com.hc.product.model.Product;
@@ -124,6 +125,21 @@ public class AppController {
 		OrderDetail orderDetail = orderService.findOrderDetailByInvoiceNumber(invoiceNo);
 		model.addAttribute("orderDetail", orderDetail);
 		return "orderDetail";
+	}
+
+	//---ORDER DETAIL UI---
+	@RequestMapping(value = { "/most-bought-product" }, method = RequestMethod.GET)
+	public String mostBoughtProduct(ModelMap model) {
+		OrderProductSum orderProductSum = orderService.inquireOrderProductByLargestQuantity();
+		model.addAttribute("orderProductSum", orderProductSum);
+		return "orderDetail";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = { "/mostJSON" }, method = RequestMethod.GET)
+	public String mostBoughtProductJSON() {
+		OrderProductSum orderProductSum = orderService.inquireOrderProductByLargestQuantity();
+		return new Gson().toJson(orderProductSum);		
 	}
 	
 	//---ORDER DETAIL API---

@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hc.product.dao.OrderDAO;
 import com.hc.product.domain.Item;
 import com.hc.product.domain.OrderDetail;
+import com.hc.product.domain.OrderProductSum;
 import com.hc.product.model.Order;
 import com.hc.product.model.OrderProduct;
+import com.hc.product.model.Product;
 
 @Service("orderService")
 @Transactional
@@ -55,5 +57,17 @@ public class OrderServiceImpl implements OrderService {
 			return orderDetail;
 		}
 		return null;
+	}
+	
+	public OrderProductSum inquireOrderProductByLargestQuantity() {
+		Object[] objArr = dao.inquireOrderProductByLargestQuantity();
+		if (objArr != null) {
+			OrderProductSum ops = new OrderProductSum();
+			ops.setProductId(String.valueOf(objArr[0]));
+			ops.setSumQty(String.valueOf(objArr[1]));
+			return ops;
+		}
+		return null;
+//		return dao.inquireOrderProductByLargestQuantity();
 	}
 }
